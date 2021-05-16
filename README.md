@@ -2,11 +2,12 @@
 
 ### Want to learn how to build this?
 
-Check out the [post](https://testdriven.io/developing-a-single-page-app-with-flask-and-vuejs).
+### Что делает апи
+https://docs.google.com/document/d/1CbvjuvJvKedTB06_itvjqdHPDYvllmJjBP6yDna4mAc/edit?usp=sharing
 
-## Want to use this project?
+### Фигма
+https://www.figma.com/file/UPeIuZ6s9e5FGYVAGFCz50/CAT-Copy?node-id=0%3A1
 
-1. Fork/Clone
 
 1. Run the server-side Flask app in one terminal window:
 
@@ -20,7 +21,7 @@ Check out the [post](https://testdriven.io/developing-a-single-page-app-with-fla
 
     Navigate to [http://localhost:5000](http://localhost:5000)
 
-1. Run the client-side Vue app in a different terminal window:
+2. Run the client-side Vue app in a different terminal window:
 
     ```sh
     $ cd client
