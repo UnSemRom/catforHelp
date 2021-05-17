@@ -12,9 +12,11 @@ from txt_handler import TextHandlerFrequency, TextHandlerCloud, TextHandlerSeman
 import json
 import matplotlib.pyplot as plt
 import base64
+import os.path
 from flask_cors import CORS
 
-UPLOAD_FOLDER = 'D:\FatData-analysis\FatData-analysis\CATsite\Files'
+UPLOAD_FOLDER = '../files'
+# ../ - выходит из этой папки и заходит в files
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -73,6 +75,7 @@ def upload_file():
     if success:
         resp = jsonify({'message': 'Files successfully uploaded'})
         resp.status_code = 201
+       
         return resp
     else:
         resp = jsonify(errors)
@@ -87,11 +90,10 @@ def comparison_frequency_analysis():
     textes = []
 
     for file in files:
-        filename = secure_filename(file.filename)
-        textes.append(filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        text_from_file = file.read().decode()
+        textes.append(text_from_file)
 
-    result = txthandler.comparison_frequency_analysis(textes)
+    result = txthandler.comparison_frequency_analysis_str(textes)
     return result
     #return json.dumps(result, sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': '))
 
@@ -100,13 +102,15 @@ def frequency_analysis():
     txthandler = TextHandlerFrequency()
 
     files = request.files.getlist('files[]')
-
+    
     textes = []
-
+    
     for file in files:
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        textes.append(filename)
+        #filename = secure_filename(file.filename)
+        text_from_file = file.read().decode()
+        textes.append(text_from_file)
+        #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #textes.append(filename)
 
     result = txthandler.frequency_analysis(textes)
     return result
@@ -125,9 +129,8 @@ def semantic_analysis():
     textes = []
 
     for file in files:
-        filename = secure_filename(file.filename)
-        textes.append(filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        text_from_file = file.read().decode()
+        textes.append(text_from_file)
 
     result = txthandler.semantic_analysis(textes)
 
@@ -142,9 +145,8 @@ def get_tf_idf_query_similarity():
     textes = []
 
     for file in files:
-        filename = secure_filename(file.filename)
-        textes.append(filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        text_from_file = file.read().decode()
+        textes.append(text_from_file)
 
     result = txthandler.get_tf_idf_query_similarity(textes)
 
@@ -160,9 +162,8 @@ def WordCloud():
     textes = []
 
     for file in files:
-        filename = secure_filename(file.filename)
-        textes.append(filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        text_from_file = file.read().decode()
+        textes.append(text_from_file)
 
     result = txthandler.WordCloud(textes)
     result_base64image = {}
@@ -179,8 +180,6 @@ def WordCloud():
         image.close()
         plt.close()
         os.remove("D:\FatData-analysis\FatData-analysis\CATsite\Backend\saved_figure.png")
-
-
 
     return result_base64image
 
@@ -203,9 +202,6 @@ def login():
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     session.remove()
-
-
-
 
 if __name__ == '__main__':
     app.run()

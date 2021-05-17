@@ -98,12 +98,9 @@ class TextHandlerFrequency(TextHandler):
     def frequency_analysis(self, textes):
         results = {}
         number = 0
+        nltk.download('wordnet')
         for text in textes:
-            t_path = os.path.join(r'D:\FatData-analysis\FatData-analysis\CATsite\files', text)
-            file = open(t_path, "r", encoding='utf-8')
-            text_from_file = file.read()
-            file.close()
-            bag_txt = TextHandler.make_bagofwords(text_from_file)
+            bag_txt = TextHandler.make_bagofwords(text)
             fdist = FreqDist(bag_txt)
             results["Text" + str(number)] = fdist
             number = number+1
@@ -153,10 +150,7 @@ class TextHandlerSemantic(TextHandler):
         all_json = {}
         all_df = []
         for text in textes:
-            t_path = os.path.join(r'D:\FatData-analysis\FatData-analysis\CATsite\files', text)
-            file = open(t_path, "r", encoding='utf-8')
-            text_from_file = file.read()
-            file.close()
+            text_from_file = text
             text_from_file = sent_tokenize(text_from_file)
             text_from_file = TextHandlerSemantic.__make_doc_ready_for_tfd(text_from_file)
             text_from_file_line =  ' '.join(text_from_file)
@@ -264,7 +258,6 @@ class TextHandlerSemantic(TextHandler):
     def __createVocab(docList):
         vocab = {}
         for doc in docList:
-            print(doc)
             doc = doc.translate(str.maketrans('', '', string.punctuation))
 
             words = word_tokenize(doc.lower())
@@ -284,15 +277,10 @@ class TextHandlerCloud(TextHandler):
 
     def WordCloud(self, textes):
         TXThandler = TextHandlerCloud()
-        text_raw = []
-
-        for text in textes:
-            t = TXThandler.Str_from_file(text)
-            text_raw.append(t)
 
         StrA = ""
         STRB = []
-        for text in text_raw:
+        for text in textes:
             bag_txt = TextHandler.make_bagofwords(text)
             StrA = " ".join(bag_txt)
             STRB.append(bag_txt)
@@ -301,7 +289,7 @@ class TextHandlerCloud(TextHandler):
         wordcloud = WordCloud().generate(StrA)
         wordcloudmas.append(wordcloud)
 
-        for i in range(len(text_raw)):
+        for i in range(len(textes)):
             STRB_t = " ".join(STRB[i])
             wordcloud = WordCloud().generate(STRB_t)
             wordcloudmas.append(wordcloud)

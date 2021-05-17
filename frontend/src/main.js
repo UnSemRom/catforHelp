@@ -1,6 +1,7 @@
 import './styles/custom.scss';
 
 import Vue from 'vue'
+window.axios = require('axios');
 import Vuelidate from 'vuelidate'
 import App from '@/views/App/index.vue'
 import router from './router'
@@ -13,6 +14,8 @@ Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.use(Vuelidate);
 Vue.use(AxiosPlugin)
+
+
 new Vue({
   router,
   store,

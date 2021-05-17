@@ -8,7 +8,6 @@
     </div>
   </div>
 </template>
-
 <script>
   export default {
     data(){
@@ -21,18 +20,22 @@
 
       submitFile(){
             
-            let formData = new FormData();
-            formData.append('file', this.file);
-            axios.post( '/multiple-files-upload',
-                formData,
-            ).then(function(){
-          console.log('SUCCESS!!');
-        })
-        .catch(function(){
-          console.log('FAILURE!!');
-        });
+            let files = new FormData();
+            files.append('files[]', this.file);
+            console.log(this.file)
+            console.log(files.get('files[]'))
+            var b;
+
+            axios.post( 'http://127.0.0.1:5000/frequency_analysis',
+            files,
+          ).then(res => {b = res}).then(() => console.log(b.data))
+          .catch(function(){
+            console.log('Вывести ошибку');
+          });
+
+          
       },
-      handleFileUpload(){
+       handleFileUpload(){
         this.file = this.$refs.file.files[0];
       }
     }
