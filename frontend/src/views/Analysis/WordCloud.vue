@@ -4,6 +4,7 @@
       <label>File
         <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
       </label>
+       <img id="imgElem"/>
       <button v-on:click="submitFile()">Submit</button>
     </div>
   </div>
@@ -18,7 +19,7 @@
 
     methods: {
 
-      submitFile(){
+       submitFile(){
             
             let files = new FormData();
             files.append('files[]', this.file);
@@ -28,7 +29,10 @@
 
             axios.post('http://127.0.0.1:5000/WordCloud',
             files,
-          ).then(res => {b = res}).then(() => console.log(b.data))
+          ).then(res => {b = res}).then(function(){
+          let baseStr64=b.data.Text0;
+          imgElem.setAttribute('src', "data:image/jpg;base64," + baseStr64);
+          })
           .catch(function(){
             console.log('Вывести ошибку');
           });
