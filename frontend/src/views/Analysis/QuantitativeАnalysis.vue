@@ -26,7 +26,7 @@
             console.log(files.get('files[]'))
             var b;
 
-            axios.post( 'http://127.0.0.1:5000/frequency_analysis',
+            axios.post('http://127.0.0.1:5000/comparison_frequency_analysis',
             files,
           ).then(res => {b = res}).then(() => console.log(b.data))
           .catch(function(){

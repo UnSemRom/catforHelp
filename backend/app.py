@@ -179,7 +179,7 @@ def WordCloud():
         result_base64image["Text"+str(i)] = base64image
         image.close()
         plt.close()
-        os.remove("D:\FatData-analysis\FatData-analysis\CATsite\Backend\saved_figure.png")
+        os.remove("../CATsite/saved_figure.png")
 
     return result_base64image
 
