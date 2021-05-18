@@ -277,7 +277,7 @@ class TextHandlerCloud(TextHandler):
 
     def WordCloud(self, textes):
         TXThandler = TextHandlerCloud()
-
+        nltk.download('wordnet')
         StrA = ""
         STRB = []
         for text in textes:

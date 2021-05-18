@@ -15,6 +15,7 @@ import base64
 import os.path
 from flask_cors import CORS
 
+
 UPLOAD_FOLDER = '../files'
 # ../ - выходит из этой папки и заходит в files
 
